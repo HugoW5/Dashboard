@@ -33,9 +33,11 @@ main {
   align-items: center;
   padding: 10px;
   border-radius: 10px;
+  justify-content: flex-start;
   flex-direction: column;
   background-color: var(--secondary-background);
 }
+
 .dashboard-items {
   background-color: var(--background);
   margin: 10px;
@@ -56,6 +58,10 @@ main {
   justify-content: center;
   align-items: center;
   gap: 5px;
+  transition: 300ms;
+}
+#addLink:hover{
+  background-color: rgb(50, 50, 50);
 }
 
 .date-conatiner {
@@ -64,5 +70,14 @@ main {
   display: flex;
   justify-content: space-around;
   background-color: var(--secondary-background);
+}
+
+#notes{
+  margin: 0;
+  padding: 0;
+  min-height: 200px;
+  min-width: 180px;
+  border: none;
+  resize: none;
 }
 
