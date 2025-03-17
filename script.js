@@ -1,6 +1,16 @@
 document.getElementById("dashboardTitle").addEventListener("click", (e) => {
   console.log(e);
+  e.target.style.display = "none";
+  document.getElementById("dashboardTitleInput").value = e.target.innerHTML;
+  document.getElementById("dashboardTitleInput").style.display = "block";
+  document.getElementById("dashboardTitleInput").focus();
 });
+document.getElementById('dashboardTitleInput').addEventListener("focusout", (e)  => {
+  e.target.style.display = "none";
+  if(e.target.value != ""){
+    document.getElementById("dashboardTitle").innerHTML = e.target.value;
+  }
+  document.getElementById("dashboardTitle").style.display = "block";})
 
 updateClock();
 function updateClock() {
@@ -41,7 +51,7 @@ async function getWeather(position) {
   }
 
   console.log("Fetching new weather data...");
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&daily=weather_code,temperature_2m_max`;;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&daily=weather_code,temperature_2m_max`;
 
   try {
     const response = await fetch(url);

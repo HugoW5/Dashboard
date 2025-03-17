@@ -95,3 +95,13 @@ main {
 .wheater-container {
 margin: 2px;
 }
+#dashboardTitleInput{
+  display: none;
+  font-size: 22px;
+}
+#dashboardTitleContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+}
