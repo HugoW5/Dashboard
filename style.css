@@ -89,7 +89,7 @@ main {
 .info-box {
   background-color: var(--secondary-background);
   margin: 5px;
-  padding: 2px;
+  padding: 5px;
   border-radius: 5px;
 }
 .wheater-container {

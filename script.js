@@ -5,12 +5,15 @@ document.getElementById("dashboardTitle").addEventListener("click", (e) => {
   document.getElementById("dashboardTitleInput").style.display = "block";
   document.getElementById("dashboardTitleInput").focus();
 });
-document.getElementById('dashboardTitleInput').addEventListener("focusout", (e)  => {
-  e.target.style.display = "none";
-  if(e.target.value != ""){
-    document.getElementById("dashboardTitle").innerHTML = e.target.value;
-  }
-  document.getElementById("dashboardTitle").style.display = "block";})
+document
+  .getElementById("dashboardTitleInput")
+  .addEventListener("focusout", (e) => {
+    e.target.style.display = "none";
+    if (e.target.value != "") {
+      document.getElementById("dashboardTitle").innerHTML = e.target.value;
+    }
+    document.getElementById("dashboardTitle").style.display = "block";
+  });
 
 updateClock();
 function updateClock() {
@@ -26,14 +29,25 @@ function updateClock() {
 }
 
 window.onload = () => {
+  document.getElementById("notes").value = localStorage.getItem("notes");
   if (navigator.geolocation) {
-    document.getElementById("notes").value = localStorage.getItem("notes");
-
     navigator.geolocation.getCurrentPosition(getWeather);
   } else {
     console.log("Location access denied");
   }
 };
+
+async function getNews() {
+  let url = "https://polisen.se/api/events?DateTime=2025-03-17";
+ try{
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data);
+ } catch(error){
+  console.error(error);
+ }
+} 
+
 async function getWeather(position) {
   let whetherData = localStorage.getItem("whetherData");
 
