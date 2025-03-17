@@ -10,9 +10,10 @@ body {
 }
 main {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  min-height: 95vh;
 }
 .dashboard {
   display: flex;
@@ -66,7 +67,8 @@ main {
 }
 
 .date-conatiner {
-  width: 200px;
+  margin-top: 50px;
+  width: 300px;
   border-radius: 10px;
   display: flex;
   justify-content: space-around;
@@ -93,15 +95,38 @@ main {
   border-radius: 5px;
 }
 .wheater-container {
-margin: 2px;
+  margin: 2px;
 }
-#dashboardTitleInput{
+#dashboardTitleInput {
   display: none;
-  font-size: 22px;
+  font-size: 42px;
 }
-#dashboardTitleContainer{
+#dashboardTitle {
+  font-size: 42px;
+}
+#dashboardTitleContainer {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 70px;
+}
+#newBackground {
+  border: none;
+  padding: 10px;
+  background-color: var(--button-background);
+  margin-left: 10px;
+  margin-right: 10px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  transition: 300ms;
+}
+#newBackground:hover {
+  background-color: rgb(50, 50, 50);
 }
