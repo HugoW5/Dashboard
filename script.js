@@ -30,6 +30,7 @@ function updateClock() {
 
 window.onload = () => {
   document.getElementById("notes").value = localStorage.getItem("notes");
+  getNews();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(getWeather);
   } else {
@@ -38,22 +39,48 @@ window.onload = () => {
 };
 
 async function getNews() {
-  let url = "https://polisen.se/api/events?DateTime=2025-03-17";
- try{
-  const response = await fetch(url);
-  const data = await response.json();
-  console.log(data);
- } catch(error){
-  console.error(error);
+  let limit = 10;
+  let count = 0;
+
+  let url = `https://polisen.se/api/events?DateTime=${new Date()
+    .toISOString()
+    .substring(0, 10)}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+
+    data.forEach((element) => {
+      if (count >= limit) {
+        return;
+      }
+      let container = document.createElement("div");
+      container.className = "dashboard-items";
+
+      let title = document.createElement("strong");
+      title.innerHTML = element.name;
+
+      let p = document.createElement("p");
+      p.innerHTML = element.summary;
+
+      container.append(title, p);
+      container.innerHTML =
+        container.innerHTML +
+        `<button><a href="https://polisen.se/${element.url}" target="_blank">Läs mer</a><i class='bx bx-link-external'></i></button>`;
+      document.getElementById("news").appendChild(container);
+      count++;
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
-} 
-document.getElementById('newBackground').addEventListener('click', () => {
-  document.body.style.backgroundImage = "url('https://picsum.photos/1920/1080')";
+document.getElementById("newBackground").addEventListener("click", () => {
+  document.body.style.backgroundImage = `url('https://picsum.photos/${Math.random()}/picsum/1920/1080')`;
 });
 
 async function getWeather(position) {
   let whetherData = localStorage.getItem("whetherData");
-  
+
   if (whetherData) {
     whetherData = JSON.parse(whetherData);
 
