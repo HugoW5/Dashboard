@@ -45,12 +45,15 @@ async function getNews() {
   console.log(data);
  } catch(error){
   console.error(error);
- }
+}
 } 
+document.getElementById('newBackground').addEventListener('click', () => {
+  document.body.style.backgroundImage = "url('https://picsum.photos/1920/1080')";
+});
 
 async function getWeather(position) {
   let whetherData = localStorage.getItem("whetherData");
-
+  
   if (whetherData) {
     whetherData = JSON.parse(whetherData);
 
