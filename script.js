@@ -11,6 +11,7 @@ document
     e.target.style.display = "none";
     if (e.target.value != "") {
       document.getElementById("dashboardTitle").innerHTML = e.target.value;
+      localStorage.setItem("dashboardTitle", e.target.value);
     }
     document.getElementById("dashboardTitle").style.display = "block";
   });
@@ -30,6 +31,13 @@ function updateClock() {
 
 window.onload = () => {
   document.getElementById("notes").value = localStorage.getItem("notes");
+  renderLinks();
+  const dashboardTitle = localStorage.getItem("dashboardTitle");
+  if (dashboardTitle != null) {
+    document.getElementById("dashboardTitle").innerHTML = dashboardTitle;
+  } else {
+    document.getElementById("dashboardTitle").innerHTML = "John Doe Dashboard";
+  }
   getNews();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(getWeather);
@@ -66,7 +74,7 @@ async function getNews() {
       container.append(title, p);
       container.innerHTML =
         container.innerHTML +
-        `<button><a href="https://polisen.se/${element.url}" target="_blank">Läs mer</a><i class='bx bx-link-external'></i></button>`;
+        `<a href="https://polisen.se${element.url}" target="_blank"><button>Läs mer<i class='bx bx-link-external'></i></button></a>`;
       document.getElementById("news").appendChild(container);
       count++;
     });
@@ -75,8 +83,51 @@ async function getNews() {
   }
 }
 document.getElementById("newBackground").addEventListener("click", () => {
-  document.body.style.backgroundImage = `url('https://picsum.photos/${Math.random()}/picsum/1920/1080')`;
+  const randomNum = Math.floor(Math.random() * 1000);
+  document.body.style.backgroundImage = `url('https://picsum.photos/1920/1080?random=${randomNum}')`;
 });
+
+document.getElementById("addLink").addEventListener("click", () => {
+  const link = prompt("Länk");
+  console.log(link);
+  if (!link) return;
+  let links = JSON.parse(localStorage.getItem("links")) || [];
+  links.push(link);
+  localStorage.setItem("links", JSON.stringify(links));
+  renderLinks();
+});
+function renderLinks() {
+  document.getElementById("fastLinks").innerHTML = "";
+
+  const links = JSON.parse(localStorage.getItem("links")) || [];
+  
+  links.forEach((link, index) => {
+    const linkDiv = document.createElement("div");
+    linkDiv.classList.add("link", "dashboard-items");
+    
+    const anchor = document.createElement("a");
+    anchor.href = link;
+    anchor.textContent = link;
+    
+    const deleteButton = document.createElement("button");
+    deleteButton.title = "Ta bort";
+    
+    const icon = document.createElement("i");
+    icon.classList.add("bx", "bxs-trash");
+    deleteButton.appendChild(icon);
+    
+    deleteButton.addEventListener("click", () => {
+      links.splice(index, 1);
+            localStorage.setItem("links", JSON.stringify(links));
+            renderLinks();
+    });
+    
+    linkDiv.appendChild(anchor);
+    linkDiv.appendChild(deleteButton);
+        document.getElementById("fastLinks").appendChild(linkDiv);
+  });
+}
+
 
 async function getWeather(position) {
   let whetherData = localStorage.getItem("whetherData");
@@ -116,13 +167,13 @@ function templateWhetherData(data) {
   for (let i = 0; i < 4; i++) {
     console.log(data.daily.time[i]);
 
-    let container = document.createElement("div");
+    const container = document.createElement("div");
     container.className = "dashboard-items wheater-info";
-    let wmoPhrase = wmoCodeToPhrase(data.daily.weather_code[i]);
-    let temperature = data.daily.temperature_2m_max[i];
+    const wmoPhrase = wmoCodeToPhrase(data.daily.weather_code[i]);
+    const temperature = data.daily.temperature_2m_max[i];
     container.innerHTML = `<i class="${wmoPhrase.icon} bx-lg"></i>`;
 
-    let wheaterContainer = document.createElement("div");
+    const wheaterContainer = document.createElement("div");
     if (i == 0) {
       wheaterContainer.innerHTML = "<strong>Idag</strong>";
     }
@@ -136,11 +187,11 @@ function templateWhetherData(data) {
     }
     wheaterContainer.className = "wheater-container";
 
-    let description = document.createElement("span");
+    const description = document.createElement("span");
     description.className = "info-box";
     description.innerHTML = wmoPhrase.text;
 
-    let tempBox = document.createElement("span");
+    const tempBox = document.createElement("span");
     tempBox.className = "info-box";
     tempBox.innerHTML = temperature + "°C";
 

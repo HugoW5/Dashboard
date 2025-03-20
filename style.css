@@ -1,6 +1,6 @@
 :root {
-  --background: rgb(255, 255, 255);
-  --secondary-background: rgb(225, 225, 225);
+  --background: rgb(255, 255, 255, 0.4);
+  --secondary-background: rgb(225, 225, 225, 0.8);
   --button-background: rgb(124, 124, 124);
 }
 
@@ -37,6 +37,8 @@ main {
   justify-content: flex-start;
   flex-direction: column;
   background-color: var(--secondary-background);
+  backdrop-filter: (5px);
+  min-width: 220px;
 }
 
 .dashboard-items {
@@ -46,6 +48,22 @@ main {
   width: 85%;
   max-width: 400px;
   border-radius: 10px;
+}
+.link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+  width: 100%;
+  gap: 10px;
+  line-break: anywhere;
+}
+.link>button{
+  background-color: red;
+  padding: 5px;
+}
+a{
+  text-decoration: none;
 }
 button {
   border: none;
@@ -82,8 +100,8 @@ button>a{
 #notes {
   margin: 0;
   padding: 0;
-  min-height: 200px;
-  min-width: 180px;
+  height: 100%;
+  width: 100%;
   border: none;
   resize: none;
 }
@@ -118,4 +136,13 @@ button>a{
 #news{
   max-height: 650px;
   overflow-y: scroll;
+}
+#newBackground{
+  margin-top: 10px;
+}
+@media only screen and (max-width: 600px) {
+
+  .dashboard-blocks > div {
+    width: 100%;
+  }
 }
