@@ -39,7 +39,7 @@ window.onload = () => {
     document.getElementById("dashboardTitle").innerHTML = "John Doe Dashboard";
   }
   getNews();
-  
+
   navigator.geolocation.getCurrentPosition(getWeather, () => {
     console.log("Location access denied");
     document.getElementById("wheater").innerHTML +=
@@ -90,10 +90,17 @@ document.getElementById("newBackground").addEventListener("click", () => {
 
 document.getElementById("addLink").addEventListener("click", () => {
   const link = prompt("Länk");
-  console.log(link);
   if (!link) return;
+  console.log(link);
+  const heading = prompt("Rubrik");
+  if (!heading) return;
+
   let links = JSON.parse(localStorage.getItem("links")) || [];
-  links.push(link);
+  const newLink = {
+    link: link,
+    heading: heading,
+  };
+  links.push(newLink);
   localStorage.setItem("links", JSON.stringify(links));
   renderLinks();
 });
@@ -107,8 +114,8 @@ function renderLinks() {
     linkDiv.classList.add("link", "dashboard-items");
 
     const anchor = document.createElement("a");
-    anchor.href = link;
-    anchor.textContent = link;
+    anchor.href = link.link;
+    anchor.textContent = link.heading;
 
     const deleteButton = document.createElement("button");
     deleteButton.title = "Ta bort";
