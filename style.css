@@ -66,6 +66,9 @@ main {
 a{
   text-decoration: none;
 }
+.error-msg{
+  color:rgb(150, 0, 0);
+}
 button {
   border: none;
   padding: 10px;

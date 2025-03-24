@@ -43,6 +43,7 @@ window.onload = () => {
     navigator.geolocation.getCurrentPosition(getWeather);
   } else {
     console.log("Location access denied");
+    document.getElementById('wheater').innerHTML += '<p class="error-msg">Plats åtkomst nekad, kan inte hitta väder information</p>';
   }
 };
 
