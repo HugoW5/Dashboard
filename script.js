@@ -39,12 +39,12 @@ window.onload = () => {
     document.getElementById("dashboardTitle").innerHTML = "John Doe Dashboard";
   }
   getNews();
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getWeather);
-  } else {
+  
+  navigator.geolocation.getCurrentPosition(getWeather, () => {
     console.log("Location access denied");
-    document.getElementById('wheater').innerHTML += '<p class="error-msg">Plats åtkomst nekad, kan inte hitta väder information</p>';
-  }
+    document.getElementById("wheater").innerHTML +=
+      '<p class="error-msg">Plats åtkomst nekad, kan inte hitta väder information</p>';
+  });
 };
 
 async function getNews() {
@@ -101,34 +101,33 @@ function renderLinks() {
   document.getElementById("fastLinks").innerHTML = "";
 
   const links = JSON.parse(localStorage.getItem("links")) || [];
-  
+
   links.forEach((link, index) => {
     const linkDiv = document.createElement("div");
     linkDiv.classList.add("link", "dashboard-items");
-    
+
     const anchor = document.createElement("a");
     anchor.href = link;
     anchor.textContent = link;
-    
+
     const deleteButton = document.createElement("button");
     deleteButton.title = "Ta bort";
-    
+
     const icon = document.createElement("i");
     icon.classList.add("bx", "bxs-trash");
     deleteButton.appendChild(icon);
-    
+
     deleteButton.addEventListener("click", () => {
       links.splice(index, 1);
-            localStorage.setItem("links", JSON.stringify(links));
-            renderLinks();
+      localStorage.setItem("links", JSON.stringify(links));
+      renderLinks();
     });
-    
+
     linkDiv.appendChild(anchor);
     linkDiv.appendChild(deleteButton);
-        document.getElementById("fastLinks").appendChild(linkDiv);
+    document.getElementById("fastLinks").appendChild(linkDiv);
   });
 }
-
 
 async function getWeather(position) {
   let whetherData = localStorage.getItem("whetherData");
